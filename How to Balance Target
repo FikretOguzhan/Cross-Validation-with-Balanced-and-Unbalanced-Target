@@ -1,0 +1,24 @@
+# There are more than one way to balnce the data. In this project I prefer to use over sampling method.
+# The rate of 'no' in the data is 84 percent, and the rate of 'yes' is 16 percent.
+# This poses a serious problem in model training. You can see how this problem is reflected in test results on the full notebook.
+
+#OVER SAMPLING METHOD
+
+attrition_count_0, attrition_count_1 = data["Attrition"].value_counts()
+
+#Seperate the values
+attrition_0 = data[data["Attrition"] == 0]
+attrition_1 = data[data["Attrition"] == 1]
+
+#Over sampling
+attrition_1_over = attrition_1.sample(attrition_count_0, replace=True)
+test_over = pd.concat([attrition_1_over, attrition_0], axis=0)
+
+#Check the results
+print("total class of 1 and 0:",test_over['Attrition'].value_counts())
+print("==============================")
+test_over['Attrition'].value_counts().plot(kind='bar', title='count (target)')
+plt.show()
+
+
+
